@@ -1,0 +1,68 @@
+$columns :12!default;
+$gutter :20px!default;
+//Gutter, in typography, the space between columns of printed text, including the gap between facing pages
+
+$medium: 640px;
+$large: 1024px;
+%col{
+  float: left;
+  position: relative;
+  min-width: 1px;
+  background-color: rgba(#000,0.2);
+  border: thin solid black;
+  padding: 0 $gutter * 0.5;
+}
+%clearfix{
+  &::before,
+  &::after {
+    content:"";
+    display:table;
+  }
+  &::after {
+    clear:both;
+  }
+  & {
+    zoom:1; /* For IE 6/7 (trigger hasLayout) */
+  }
+}
+.row{
+  margin: 0 $gutter*-0.5 ;
+  @extend %clearfix;
+}
+@for $i from 1 through $columns{
+  .col-#{$i} {
+    @extend %col;
+    width: $i/$columns*100% ;
+  }
+  .col-l-#{$i} .col-m-#{$i} {
+    @extend %col;
+  }
+}
+
+
+
+@media only screen and (min-width: $medium ) {
+  .col-m-center{margin: 0 auto; float: none;}
+  @for $i from 1 through $columns{
+    .col-m-#{$i} {
+      width: $i/$columns*100% ;
+    }
+  }
+}
+
+@media only screen and (min-width: $large ) {
+  @for $i from 1 through $columns{
+    .col-l-#{$i} {
+      width: $i/$columns*100% ;
+    }
+  }
+}
+
+//anvant
+//@media only screen and (max-width: 640px){
+//  @for $i from 1 through $columns{
+//    .col-#{$i} {
+//      width: 100% ;
+//    }
+//  }
+//}
